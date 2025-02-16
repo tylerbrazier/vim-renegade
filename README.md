@@ -1,6 +1,6 @@
 # renegade.vim
 
-Simple, featherweight (<20 SLOC) alternative to
+A simple, featherweight (<50 SLOC) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
 At the heart of the plugin is `:R` which works like `:r!`
@@ -13,6 +13,9 @@ You can run the command directly or the predefined mappings that use it:
 - `<Leader>gl` git log
 - `<Leader>go` git show object (e.g. hash) under the cursor
                (use in log or blame output)
+
+The plugin also sets `grepprg` and `path` when the cwd is in a git project so
+you can `:grep` and `:find` tracked files (and avoid gitignored ones).
 
 ## Why?
 
