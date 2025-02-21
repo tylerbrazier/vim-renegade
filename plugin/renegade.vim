@@ -11,11 +11,11 @@ command -count -nargs=+ -complete=file R
 	\|filetype detect
 	\|<count>
 
-nnoremap <Leader>gb :tab .R git blame %<CR>
-nnoremap <Leader>gl :tab R git log <Up>
-nnoremap <Leader>go :R git show <cWORD><CR>
-nnoremap <Leader>gd :vertical R git show HEAD:%<CR>
-		\   :diffthis<CR><C-W>p:diffthis<CR>
+silent! nnoremap <unique> <Leader>gb :tab .R git blame %<CR>
+silent! nnoremap <unique> <Leader>gl :tab R git log <Up>
+silent! nnoremap <unique> <Leader>go :R git show <cWORD><CR>
+silent! nnoremap <unique> <Leader>gd :vertical R git show HEAD:%<CR>
+			\:diffthis<CR><C-W>p:diffthis<CR>
 
 augroup renegade
 	autocmd!
