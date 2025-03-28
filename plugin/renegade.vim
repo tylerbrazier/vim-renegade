@@ -3,8 +3,8 @@ if exists("g:loaded_renegade") || &cp
 endif
 let g:loaded_renegade = 1
 
-command -count -nargs=+ -complete=file R
-	\ <mods> new
+command -count -bang -nargs=+ -complete=file R
+	\ if empty('<bang>') | <mods> new | else | enew | endif
 	\|setl buftype=nofile bufhidden=wipe
 	\|exe 'r !'<q-args>
 	\|1d _

@@ -4,7 +4,10 @@ A simple, featherweight (<50 SLOC) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
 At the heart of the plugin is `:R` which works like `:r!`
-but outputs to a new scratch window (accepting modifiers like `:tab`).
+but outputs to a new scratch window.
+It accepts modifiers like `:tab R ...`. To reuse the current window `:R!`.
+Use a count to start the cursor on that line number in the new window
+like `:7R` or `:.R` for the current line number (useful for e.g. git blame).
 
 You can run the command directly or the predefined mappings that use it:
 
@@ -27,9 +30,6 @@ you can `:grep` and `:find` tracked files (and avoid gitignored ones).
 
 ## Ideas
 
-- `:R git status -s` and a macro for `:!git add <cWORD>`
+- `:R git status` and a macro for `:!git add <cWORD>` `:.R! git status`
 - `:R git ls-files` and `gf` to edit a file in the window
-- `:R` also accepts a count (like `:7R`) to start the cursor on that line in
-  the new window (e.g. the included mapping does `:.R git blame %` to use the
-  same line as the current file)
 - `:R` isn't limited to git commands
