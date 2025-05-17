@@ -33,3 +33,8 @@ you can `:grep` and `:find` tracked files (and avoid gitignored ones).
 - `:R git status` and a macro for `:!git add <cWORD>` `:.R! git status`
 - `:R git ls-files` and `gf` to edit a file in the window
 - `:R` isn't limited to git commands
+
+## TODO
+
+- maps with `%` don't work if cwd is a subdir (e.g. w/ `autochdir`) 
+- add `<Leader>gs` (status) that loads the qf list from `git diff`
