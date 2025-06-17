@@ -36,5 +36,4 @@ you can `:grep` and `:find` tracked files (and avoid gitignored ones).
 
 ## TODO
 
-- maps with `%` don't work if cwd is a subdir (e.g. w/ `autochdir`) 
 - add `<Leader>gs` (status) that loads the qf list from `git diff`
