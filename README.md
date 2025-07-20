@@ -42,6 +42,5 @@ you can `:grep` and `:find` tracked files (and avoid gitignored ones).
     `set errorformat=%-P+++\ b/%f,%A@@%*[^+]+%l%.%#,%Z%m,%-G%.%#`
     (use `cexpr system('git -P diff -U0')`)
     * consider one qf entry for each changed file, not each change in each file
-- use shorter format for blame
 - `:lcd` to project dir when editing a file in a git project
 - show cwd (project name) and git status in statusline 
