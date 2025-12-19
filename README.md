@@ -1,6 +1,6 @@
 # renegade.vim
 
-A simple, featherweight (<20 lines) alternative to
+A simple, featherweight (<40 lines) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
 At the heart of the plugin is `:R` which works like `:r!`
