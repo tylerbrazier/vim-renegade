@@ -13,7 +13,7 @@ command -count -bang -nargs=+ -complete=file R
 
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>
 silent! nnoremap <unique> <Leader>gl :tab R git log <Up>
-silent! nnoremap <unique> <Leader>go :R git show <cWORD><CR>
+silent! nnoremap <unique> <Leader>go :R git show <C-R><C-W>
 silent! nnoremap <unique> <Leader>gd :diffthis<CR>
 			\:vertical R git show HEAD:./%<CR>
 			\:diffthis<CR>
