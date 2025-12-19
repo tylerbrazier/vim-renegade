@@ -31,3 +31,8 @@ You can run the command directly or the predefined mappings that use it:
 - `:R git status` and a macro for `:!git add <cWORD>` `:.R! git status`
 - `:R git ls-files` and `gf` to edit a file in the window
 - `:R` isn't limited to git commands
+
+## TODO
+
+- git diff should preserve cursor location
+- git log visual selection using `-L`
