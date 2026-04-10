@@ -5,10 +5,10 @@ let g:loaded_renegade = 1
 
 command -count -bang -nargs=+ -complete=file R
 	\ if empty('<bang>') | <mods> new | else | enew | endif
-	\|setl buftype=nofile bufhidden=wipe
 	\|exe 'silent r !'<q-args>
 	\|1d _
 	\|filetype detect
+	\|setl buftype=nofile bufhidden=wipe nomodifiable
 	\|<count>
 
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>
