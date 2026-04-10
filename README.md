@@ -1,29 +1,31 @@
 # renegade.vim
 
-A simple, featherweight (<40 lines) alternative to
+Simple featherweight (<50 lines) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
-
-At the heart of the plugin is `:R` which works like `:r!`
-but outputs to a new scratch window.
-It accepts modifiers like `:tab R ...`. To reuse the current window `:R!`.
-Use a count to start the cursor on that line number in the new window
-like `:7R` or `:.R` for the current line number (useful for e.g. git blame).
-
-You can run the command directly or the predefined mappings that use it:
 
 - `<Leader>gb` git blame the current file in a new tab
 - `<Leader>gd` git diff the current file side by side
-- `<Leader>gl` git log
-- `<Leader>go` git show object (e.g. hash) under the cursor
-               (use in log or blame output)
+- `<Leader>gs` git status in quickfix list
+- `<Leader>gl` git log (works on visual selection)
+- `<Leader>go` git show object (hash) under the cursor (after log/blame)
+
+All of these (except status) use the command `:R` which works like `:r !` and
+
+- outputs to a new scratch window (unless `!` is given)
+- accepts modifiers like `:tab` and `:vert`
+- takes a count to put the cursor on that line; `:.R git blame %` leverages
+  this to start the cursor on the same line as the blamed file
+- takes a range and replaces any `<`/`>` in the command with start/end of range
+  e.g. `:R git log -L <,>:%` in visual mode to see the history of selected lines
 
 ## Why?
 
-- fugitive has more bells and whistles than I want
+- fugitive is bloated
 - it also leaves behind a lot of garbage buffers (check `:ls!`);
   the `:R` buffer gets wiped out when you leave it
 - `:term` always wraps text so diff and blame don't work
 - `:term` has reflow issues when resizing windows
+- `:term` has limited scrollback so log always needs `-n` for big repos
 - vim is already great at working with text, so just put git's output in vim
 
 ## Ideas
@@ -35,4 +37,3 @@ You can run the command directly or the predefined mappings that use it:
 ## TODO
 
 - git diff should preserve cursor location
-- git log visual selection using `-L`
