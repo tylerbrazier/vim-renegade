@@ -5,6 +5,7 @@ let g:loaded_renegade = 1
 
 command -count -bang -nargs=+ -complete=file R
 	\ if empty('<bang>') | <mods> new | else | enew | endif
+	\|exe 'file R'..bufnr() <q-args>
 	\|exe 'silent r !'<q-args>
 	\|1d _
 	\|filetype detect
