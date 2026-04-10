@@ -33,7 +33,3 @@ All of these (except status) use the command `:R` which works like `:r !` and
 - `:R git status` and a macro for `:!git add <cWORD>` `:.R! git status`
 - `:R git ls-files` and `gf` to edit a file in the window
 - `:R` isn't limited to git commands
-
-## TODO
-
-- git diff should preserve cursor location

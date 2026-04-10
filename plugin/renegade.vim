@@ -9,7 +9,7 @@ silent! nnoremap <unique> <Leader>go :R git show <C-R><C-W>
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>
 silent! nnoremap <unique> <Leader>gs :cexpr Rstatus()<CR>
 silent! nnoremap <unique> <Leader>gd :diffthis<CR>
-			\:vertical R git show HEAD:./%<CR>
+			\:vert .R git show HEAD:./%<CR>
 			\:diffthis<CR>
 
 command -range -bang -nargs=+ -complete=file R
