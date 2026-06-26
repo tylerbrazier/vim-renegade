@@ -4,7 +4,7 @@ endif
 let g:loaded_renegade = 1
 
 silent! nnoremap <unique> <Leader>gl :R git log <Up>
-silent! vnoremap <unique> <Leader>gl :R git log -L <,>:% <Up>
+silent! vnoremap <unique> <Leader>gl :Range git log -L <,>:% <Up>
 silent! nnoremap <unique> <Leader>go :R git show <C-R><C-W>
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>
 silent! nnoremap <unique> <Leader>gs :cexpr Rstatus()<CR>
@@ -12,28 +12,19 @@ silent! nnoremap <unique> <Leader>gd :diffthis<CR>
 			\:vert .R git show HEAD:./%<CR>
 			\:diffthis<CR>
 
-command -range -nargs=+ -complete=file R
-	\ call R(<q-args>, '<mods>', <range>, <line1>, <line2>)
+command -count -nargs=+ -complete=file R
+	\ exe '<mods> new'
+	\|exe 'file R'..bufnr() <q-args>
+	\|exe 'silent r !' <q-args>
+	\|1d _
+	\|filetype detect
+	\|setl buftype=nofile bufhidden=wipe nomodifiable
+	\|<count>
 
-function R(cmd, mods, range, line1, line2)
-	exe a:mods 'new'
-
-	" e.g. visual :'<,'>R git log -L <,>:%
-	let cmd = substitute(a:cmd, '<', a:line1, 'g')
-	let cmd = substitute(cmd, '>', a:line2, 'g')
-
-	" include bufnr to make the name unique
-	exe 'file R'..bufnr() cmd
-
-	exe 'silent r !' cmd
-	1d _ "delete first empty line
-
-	setl buftype=nofile bufhidden=wipe nomodifiable
-	filetype detect "for highlighting
-
-	" if count was given (range==1) go to that line number (line2==count)
-	exe a:range == 1 ? a:line2 : 1
-endfunction
+command -range -nargs=+ -complete=file Range
+	\ let args = substitute(<q-args>, '<', <line1>, 'g')
+	\|let args = substitute(args,     '>', <line2>, 'g')
+	\|exe 'R' args
 
 function Rstatus()
 	" gather the new files first
