@@ -12,11 +12,11 @@ silent! nnoremap <unique> <Leader>gd :diffthis<CR>
 			\:vert .R git show HEAD:./%<CR>
 			\:diffthis<CR>
 
-command -range -bang -nargs=+ -complete=file R
-	\ call R(<q-args>, '<bang>', '<mods>', <range>, <line1>, <line2>)
+command -range -nargs=+ -complete=file R
+	\ call R(<q-args>, '<mods>', <range>, <line1>, <line2>)
 
-function R(cmd, bang, mods, range, line1, line2)
-	exe empty(a:bang) ? a:mods..' new' : 'enew'
+function R(cmd, mods, range, line1, line2)
+	exe a:mods 'new'
 
 	" e.g. visual :'<,'>R git log -L <,>:%
 	let cmd = substitute(a:cmd, '<', a:line1, 'g')

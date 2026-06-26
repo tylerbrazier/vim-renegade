@@ -11,7 +11,7 @@ Simple featherweight (<50 lines) alternative to
 
 All of these (except status) use the command `:R` which works like `:r !` and
 
-- outputs to a new scratch window (unless `!` is given)
+- outputs to a new scratch window
 - accepts modifiers like `:tab` and `:vert`
 - takes a count to put the cursor on that line; `:.R git blame %` leverages
   this to start the cursor on the same line as the blamed file
@@ -30,6 +30,5 @@ All of these (except status) use the command `:R` which works like `:r !` and
 
 ## Ideas
 
-- `:R git status` and a macro for `:!git add <cWORD>` `:.R! git status`
 - `:R git ls-files` and `gf` to edit a file in the window
 - `:R` isn't limited to git commands
