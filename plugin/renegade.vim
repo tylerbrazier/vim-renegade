@@ -13,11 +13,10 @@ silent! nnoremap <unique> <Leader>gd :diffthis<CR>
 			\:diffthis<CR>
 
 command -count -nargs=+ -complete=file R
-	\ exe '<mods> new'
+	\ exe '<mods> new +setl\ ft='..(<count> > 0 ? &ft : 'git')
 	\|exe 'file R'..bufnr() <q-args>
 	\|exe 'silent r !' <q-args>
 	\|1d _
-	\|filetype detect
 	\|setl buftype=nofile bufhidden=wipe nomodifiable
 	\|<count>
 
