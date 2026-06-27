@@ -1,22 +1,28 @@
 # renegade.vim
 
-Simple featherweight (<50 lines) alternative to
+Simple featherweight (~60 line) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
 - `<Leader>gb` git blame the current file in a new tab
 - `<Leader>gd` git diff the current file side by side
-- `<Leader>gs` git status in quickfix list
 - `<Leader>gl` git log (works on visual selection)
 - `<Leader>go` git show object (hash) under the cursor (after log/blame)
+- `<Leader>gq` quickfix changed files/lines (see `:Review` below)
 
-All of these (except status) use the command `:R` which works like `:r !` and
+These mappings leverage commands:
 
-- outputs to a new scratch window
-- accepts modifiers like `:tab` and `:vert`
-- takes a count to put the cursor on that line; `:.R git blame %` leverages
-  this to start the cursor on the same line as the blamed file
-- takes a range and replaces any `<`/`>` in the command with start/end of range
-  e.g. `:R git log -L <,>:%` in visual mode to see the history of selected lines
+- `:R` works like `:r !` and:
+  - outputs to a new scratch window
+  - accepts modifiers like `:tab` and `:vert`
+  - accepts a count to put the cursor on that line; e.g. `:.R git blame %`
+    blames the current file and starts the cursor on the current line
+- `:Range` is a wrapper around `:R` that accepts a range and replaces any
+  `<`/`>` in the command with start/end of range e.g. `:Range git log -L <,>:%`
+  in visual mode to see the history of selected lines
+- `:Review[!] [file]` to load the quickfix list:
+  - when no `[file]` is given, list each new/changed file;
+    include `!` to list every change of those files
+  - when `[file]` is given, list each of its changes (implies `!`)
 
 ## Why?
 

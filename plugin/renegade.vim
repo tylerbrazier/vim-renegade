@@ -7,7 +7,7 @@ silent! nnoremap <unique> <Leader>gl :R git log <Up>
 silent! vnoremap <unique> <Leader>gl :Range git log -L <,>:% <Up>
 silent! nnoremap <unique> <Leader>go :R git show <C-R><C-W>
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>
-silent! nnoremap <unique> <Leader>gs :cexpr Rstatus()<CR>
+silent! nnoremap <unique> <Leader>gq :Review<Up>
 silent! nnoremap <unique> <Leader>gd :diffthis<CR>
 			\:vert .R git show HEAD:./%<CR>
 			\:diffthis<CR>
@@ -25,20 +25,37 @@ command -range -nargs=+ -complete=file Range
 	\|let args = substitute(args,     '>', <line2>, 'g')
 	\|exe 'R' args
 
-function Rstatus()
-	" gather the new files first
-	let result = systemlist('git status --porcelain -u')
-				\->filter('v:val =~ "^??"')
-				\->map('v:val[3:].."|1| [New file]"')
-	let diff = systemlist('git -P diff -U0')
+command -bang -nargs=? -complete=file Review
+			\ call Review(empty('<bang><args>'), <q-args>)
+
+function Review(condense, file)
+	" first gather the new files if no file was given
+	let result = empty(a:file)
+			\ ? systemlist('git status --porcelain -u')
+			\   ->filter('v:val =~ "^??"')
+			\   ->map('v:val[3:].."|1| [New file]"')
+			\ : []
+	let cmd = 'git -P diff -U0'
+	if !empty(a:file)
+		let cmd ..= ' -- '..shellescape(a:file)
+	endif
+	let diff = systemlist(cmd)
+
+	" creates a quickfix line from diff[i] with format "file|line| message"
+	let QFLine = { f, i -> f..
+				\'|'..matchstr(diff[i], '+\d\+')[1:]..
+				\'| '..diff[i+1] }
+
 	for i in range(len(diff))
-		if diff[i] !~ '^+++ b'
-			continue
+		if diff[i] =~ '^+++ b'
+			let f = diff[i][6:]
+			if a:condense
+				call add(result, QFLine(f, i+1))
+			endif
+		elseif !a:condense && diff[i] =~ '^@@'
+			call add(result, QFLine(f, i))
 		endif
-		let f = diff[i][6:]
-		let l = matchstr(diff[i+1], '+\d\+')[1:]
-		let m = diff[i+2]
-		call add(result, f..'|'..l..'| '..m)
 	endfor
-	return result
+	copen
+	cexpr result
 endfunction
