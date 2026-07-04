@@ -6,7 +6,7 @@ Simple featherweight (~60 line) alternative to
 - `<Leader>gb` git blame the current file in a new tab
 - `<Leader>gd` git diff the current file side by side
 - `<Leader>gl` git log (works on visual selection)
-- `<Leader>go` git show object (hash) under the cursor (after log/blame)
+- `<Leader>go` git show object (hash) under the cursor (use in log/blame window)
 - `<Leader>gq` quickfix changed files/lines (see `:Review` below)
 
 These mappings leverage commands:
