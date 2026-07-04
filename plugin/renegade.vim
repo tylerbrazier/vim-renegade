@@ -36,7 +36,7 @@ function Review(condense, file)
 			\   ->filter('v:val =~ "^??"')
 			\   ->map('v:val[3:].."|1| [New file]"')
 			\ : []
-	let cmd = 'git -P diff -U0'
+	let cmd = 'git -P diff --relative -U0'
 	if !empty(a:file)
 		let cmd ..= ' -- '..shellescape(a:file)
 	endif
