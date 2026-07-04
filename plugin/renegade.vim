@@ -57,6 +57,12 @@ function Review(condense, file)
 			call add(result, QFLine(f, i))
 		endif
 	endfor
-	copen
+
 	cexpr result
+	if len(result) > 0
+		copen
+	else
+		cclose
+		echo 'No changes'
+	endif
 endfunction

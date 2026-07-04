@@ -1,6 +1,6 @@
 # renegade.vim
 
-Simple featherweight (~60 line) alternative to
+Simple featherweight (<70 line) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
 - `<Leader>gb` git blame the current file in a new tab
