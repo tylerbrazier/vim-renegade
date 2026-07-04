@@ -7,6 +7,7 @@ Simple featherweight (~60 line) alternative to
 - `<Leader>gd` git diff the current file side by side
 - `<Leader>gl` git log (works on visual selection)
 - `<Leader>go` git show object (hash) under the cursor (use in log/blame window)
+- `<Leader>ga` git add the current file
 - `<Leader>gq` quickfix changed files/lines (see `:Review` below)
 
 These mappings leverage commands:

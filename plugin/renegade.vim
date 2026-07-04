@@ -8,6 +8,7 @@ silent! vnoremap <unique> <Leader>gl :Range git log -L <,>:% <Up>
 silent! nnoremap <unique> <Leader>go :R git show <cword><CR>
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>
 silent! nnoremap <unique> <Leader>gq :Review<Up>
+silent! nnoremap <unique> <Leader>ga :!git add %<CR>
 silent! nnoremap <unique> <Leader>gd :diffthis<CR>
 			\:vert .R git show HEAD:./%<CR>
 			\:diffthis<CR>
