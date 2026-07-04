@@ -33,8 +33,3 @@ These mappings leverage commands:
 - `:term` has reflow issues when resizing windows
 - `:term` has limited scrollback so log always needs `-n` for big repos
 - vim is already great at working with text, so just put git's output in vim
-
-## Ideas
-
-- `:R git ls-files` and `gf` to edit a file in the window
-- `:R` isn't limited to git commands
