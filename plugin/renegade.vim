@@ -9,9 +9,7 @@ silent! nnoremap <unique> <Leader>go :R git show <cword><CR>
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>
 silent! nnoremap <unique> <Leader>gq :Review<Up>
 silent! nnoremap <unique> <Leader>ga :!git add %<CR>
-silent! nnoremap <unique> <Leader>gd :diffthis<CR>
-			\:vert .R git show HEAD:./%<CR>
-			\:diffthis<CR>
+silent! nnoremap <unique> <Leader>gd :Relative <Up>
 
 command -count -nargs=+ -complete=file R
 	\ exe '<mods> new +setl\ ft='..(<count> > 0 ? &ft : 'git')
@@ -25,6 +23,12 @@ command -range -nargs=+ -complete=file Range
 	\ let args = substitute(<q-args>, '<', <line1>, 'g')
 	\|let args = substitute(args,     '>', <line2>, 'g')
 	\|exe 'R' args
+
+command -nargs=? -complete=file Relative
+	\ diffthis
+	\|exe 'vert .R git show' shellescape(('<args>' ?? 'HEAD')
+	\ ..':./'..expand('%'))
+	\|diffthis
 
 command -bang -nargs=? -complete=file Review
 			\ call Review(empty('<bang><args>'), <q-args>)

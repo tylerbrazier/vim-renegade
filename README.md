@@ -1,10 +1,10 @@
 # renegade.vim
 
-Simple featherweight (<70 line) alternative to
+Simple featherweight (~70 line) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
 - `<Leader>gb` git blame the current file in a new tab
-- `<Leader>gd` git diff the current file side by side
+- `<Leader>gd` git diff the current file side by side (see `:Relative` below)
 - `<Leader>gl` git log (works on visual selection)
 - `<Leader>go` git show object (hash) under the cursor (use in log/blame window)
 - `<Leader>ga` git add the current file
@@ -20,10 +20,12 @@ These mappings leverage commands:
 - `:Range` is a wrapper around `:R` that accepts a range and replaces any
   `<`/`>` in the command with start/end of range e.g. `:Range git log -L <,>:%`
   in visual mode to see the history of selected lines
+- `:Relative [revision]` to show `revision` (default is `HEAD`) of the current
+  file in a vertical split and diff them
 - `:Review[!] [file]` to load the quickfix list:
-  - when no `[file]` is given, list each new/changed file;
+  - when no `file` is given, list each new/changed file;
     include `!` to list every change of those files
-  - when `[file]` is given, list each of its changes (implies `!`)
+  - when `file` is given, list each of its changes (implies `!`)
 
 ## Why?
 
