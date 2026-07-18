@@ -13,10 +13,11 @@ Simple featherweight (~70 line) alternative to
 These mappings leverage commands:
 
 - `:R` works like `:r !` and:
-  - outputs to a new scratch window
+  - outputs to a scratch buffer in a new window
   - accepts modifiers like `:tab` and `:vert`
   - accepts a count to put the cursor on that line; e.g. `:.R git blame %`
     blames the current file and starts the cursor on the current line
+  - sets the temporary buffer's `filetype=git` (use `:R!` to skip that)
 - `:Range` is a wrapper around `:R` that accepts a range and replaces any
   `<`/`>` in the command with start/end of range e.g. `:Range git log -L <,>:%`
   in visual mode to see the history of selected lines

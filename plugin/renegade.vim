@@ -11,12 +11,12 @@ silent! nnoremap <unique> <Leader>gq :Review<Up>
 silent! nnoremap <unique> <Leader>ga :!git add %<CR>
 silent! nnoremap <unique> <Leader>gd :Relative <Up>
 
-command -count -nargs=+ -complete=file R
-	\ exe '<mods> new +setl\ ft='..(<count> > 0 ? &ft : 'git')
+command -count -bang -nargs=+ -complete=file R
+	\ exe '<mods> new'
 	\|exe 'file R'..bufnr() <q-args>
 	\|exe 'silent r !' <q-args>
 	\|1d _
-	\|setl buftype=nofile bufhidden=wipe nomodifiable
+	\|exe 'setl noma bt=nofile bh=wipe ft='..('<bang>'=='!' ? '' : 'git')
 	\|<count>
 
 command -range -nargs=+ -complete=file Range
@@ -26,8 +26,9 @@ command -range -nargs=+ -complete=file Range
 
 command -nargs=? -complete=file Relative
 	\ diffthis
-	\|exe 'vert .R git show' shellescape(('<args>' ?? 'HEAD')
+	\|exe 'vert .R! git show' shellescape(('<args>' ?? 'HEAD')
 	\ ..':./'..expand('%'))
+	\|let &ft = getbufvar('#', '&filetype')
 	\|diffthis
 
 command -bang -nargs=? -complete=file Review
