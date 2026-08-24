@@ -1,6 +1,6 @@
 # renegade.vim
 
-Simple featherweight (~70 line) alternative to
+Simple featherweight alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
 - `<Leader>gl` git log (works on visual selection)

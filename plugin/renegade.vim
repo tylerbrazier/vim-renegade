@@ -64,7 +64,10 @@ function Review(condense, file)
 		endif
 	endfor
 
+	let saved_efm = &errorformat
+	let &errorformat = '%f|%l| %m'
 	cexpr result
+	let &errorformat = saved_efm
 	if len(result) > 0
 		copen
 	else
