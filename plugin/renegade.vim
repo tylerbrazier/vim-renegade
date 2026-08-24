@@ -5,12 +5,12 @@ let g:loaded_renegade = 1
 
 silent! nnoremap <unique> <Leader>gl :R git log <Up>
 silent! vnoremap <unique> <Leader>gl :Range git log -L <,>:% <Up>
-silent! nnoremap <unique> <Leader>go :R git show --diff-merges=on <cword><CR>
 silent! nnoremap <unique> <Leader>gb :tab .R git blame --date short %<CR>:setl cul<CR>
-silent! nnoremap <unique> <Leader>gq :Review<Up>
+silent! nnoremap <unique> <Leader>go :R git show --diff-merges=on <cword><CR>
 silent! nnoremap <unique> <Leader>ga :!git add %<CR>
 silent! nnoremap <unique> <Leader>gr :!git restore %
 silent! nnoremap <unique> <Leader>gd :Relative <Up>
+silent! nnoremap <unique> <Leader>gq :Review<Up>
 
 command -count -bang -nargs=+ -complete=file R
 	\ exe '<mods> new'

@@ -3,12 +3,12 @@
 Simple featherweight (~70 line) alternative to
 [fugitive](https://github.com/tpope/vim-fugitive).
 
-- `<Leader>gb` git blame the current file in a new tab
-- `<Leader>gd` git diff the current file side by side (see `:Relative` below)
 - `<Leader>gl` git log (works on visual selection)
+- `<Leader>gb` git blame the current file in a new tab
 - `<Leader>go` git show object (hash) under the cursor (use in log/blame window)
 - `<Leader>ga` git add the current file
 - `<Leader>gr` git restore the current file
+- `<Leader>gd` git diff the current file side by side (see `:Relative` below)
 - `<Leader>gq` quickfix changed files/lines (see `:Review` below)
 
 These mappings leverage commands:
