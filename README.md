@@ -8,6 +8,7 @@ Simple featherweight (~70 line) alternative to
 - `<Leader>gl` git log (works on visual selection)
 - `<Leader>go` git show object (hash) under the cursor (use in log/blame window)
 - `<Leader>ga` git add the current file
+- `<Leader>gr` git restore the current file
 - `<Leader>gq` quickfix changed files/lines (see `:Review` below)
 
 These mappings leverage commands:
