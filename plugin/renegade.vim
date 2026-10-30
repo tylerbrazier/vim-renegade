@@ -10,7 +10,8 @@ silent! nnoremap <unique> <Leader>go :R git show --diff-merges=on <cword><CR>
 silent! nnoremap <unique> <Leader>ga :!git add %<CR>
 silent! nnoremap <unique> <Leader>gr :!git restore %
 silent! nnoremap <unique> <Leader>gd :Relative <Up>
-silent! nnoremap <unique> <Leader>gq :Report<Up>
+silent! nnoremap <unique> <Leader>gs :copen<CR>:Report!<CR>
+silent! nnoremap <unique> <Leader>gcr :Review origin/HEAD<CR>
 
 command -count -bang -nargs=+ -complete=file R
 	\ exe '<mods> new'
@@ -25,14 +26,17 @@ command -range -nargs=+ -complete=file Range
 	\|let args = substitute(args,     '>', <line2>, 'g')
 	\|exe 'R' args
 
-command -nargs=? -complete=file Relative
+command -bar -nargs=? -complete=file Relative
 	\ diffthis
 	\|exe 'vert .R! git show' shellescape(('<args>' ?? 'HEAD')
 	\ ..':./'..expand('%'))
 	\|let &ft = getbufvar('#', '&filetype')
 	\|diffthis
 
-command -bang -nargs=? -complete=file Report call Report('<bang>', <q-args>)
+command -bar -bang -nargs=? -complete=file Report
+			\ call Report('<bang>', <q-args>)
+
+command -nargs=? Review call Review(<q-args>)
 
 function Report(incl_untracked, diff_args)
 	let result = []
@@ -62,7 +66,6 @@ function Report(incl_untracked, diff_args)
 	endfor
 
 	if len(result) > 0
-		copen
 		let saved_efm = &errorformat
 		let &errorformat = '%f|%l|%m'
 		cexpr result
@@ -71,4 +74,17 @@ function Report(incl_untracked, diff_args)
 		cclose
 		echo 'No changes'
 	endif
+endfunction
+
+function Review(rev)
+	tab split
+	if empty(a:rev)
+		exe 'Report!'
+		cdo exe 'Relative | tab split'
+	else
+		exe 'Report' a:rev..'...HEAD'
+		cdo exe 'Relative' a:rev ' | tab split'
+	endif
+	close "last window
+	tabprevious
 endfunction

@@ -9,7 +9,8 @@ Simple featherweight alternative to
 - `<Leader>ga` git add the current file
 - `<Leader>gr` git restore the current file
 - `<Leader>gd` git diff the current file side by side (see `:Relative` below)
-- `<Leader>gq` quickfix changed files (see `:Report` below)
+- `<Leader>gs` git status in quickfix list (see `:Report` below)
+- `<Leader>gcr` code review current branch (see `:Review` below)
 
 These mappings leverage commands:
 
@@ -25,7 +26,9 @@ These mappings leverage commands:
 - `:Relative [revision]` to show `revision` (default is `HEAD`) of the current
   file in a vertical split and diff them
 - `:Report[!] [revision]` to load the quickfix list with changed files
-  since `revision` (default is `HEAD`). Use `!` to include untracked files.
+  since `revision` (default is `HEAD`). Use `!` to include untracked files
+- `:Review [revision]` combos `:Report` with `:cdo Relative` to open a diff
+  in a new tab for each changed file since `revision` (default is `HEAD`)
 
 ## Why?
 
