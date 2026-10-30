@@ -10,7 +10,7 @@ silent! nnoremap <unique> <Leader>go :R git show --diff-merges=on <cword><CR>
 silent! nnoremap <unique> <Leader>ga :!git add %<CR>
 silent! nnoremap <unique> <Leader>gr :!git restore %
 silent! nnoremap <unique> <Leader>gd :Relative <Up>
-silent! nnoremap <unique> <Leader>gq :Review<Up>
+silent! nnoremap <unique> <Leader>gq :Report<Up>
 
 command -count -bang -nargs=+ -complete=file R
 	\ exe '<mods> new'
@@ -32,44 +32,41 @@ command -nargs=? -complete=file Relative
 	\|let &ft = getbufvar('#', '&filetype')
 	\|diffthis
 
-command -bang -nargs=? -complete=file Review
-			\ call Review(empty('<bang><args>'), <q-args>)
+command -bang -nargs=? -complete=file Report call Report('<bang>', <q-args>)
 
-function Review(condense, file)
-	" first gather the new files if no file was given
-	let result = empty(a:file)
-			\ ? systemlist('git status --porcelain -u')
-			\   ->filter('v:val =~ "^??"')
-			\   ->map('v:val[3:].."|1| [New file]"')
-			\ : []
-	let cmd = 'git -P diff --relative -U0 --diff-filter=d'
-	if !empty(a:file)
-		let cmd ..= ' -- '..shellescape(a:file)
+function Report(incl_untracked, diff_args)
+	let result = []
+	if !empty(a:incl_untracked)
+		" git diff can't show untracked files so use git status
+		let status = systemlist('git status --porcelain -u')
+		if v:shell_error | throw string(status) | endif
+		let result = status
+				\->filter('v:val =~ "^??"')
+				\->map('v:val[3:].."|1|[Untracked]"')
 	endif
-	let diff = systemlist(cmd)
 
-	" creates a quickfix line from diff[i] with format "file|line| message"
-	let QFLine = { f, i -> f..
-				\'|'..matchstr(diff[i], '+\d\+')[1:]..
-				\'| '..diff[i+1] }
+	let diff = systemlist('git -P diff --relative -U0 '..
+				\ shellescape(a:diff_args ?? 'HEAD'))
+	if v:shell_error | throw string(diff) | endif
 
 	for i in range(len(diff))
 		if diff[i] =~ '^+++ b'
-			let f = diff[i][6:]
-			if a:condense
-				call add(result, QFLine(f, i+1))
-			endif
-		elseif !a:condense && diff[i] =~ '^@@'
-			call add(result, QFLine(f, i))
+			let file = diff[i][6:]
+			let line = matchstr(diff[i+1], '+\d\+')[1:]
+			let message = diff[i+2]
+			call add(result, file..'|'..line..'|'..message)
+		elseif diff[i] =~ '^+++ /dev/null'
+			let file = diff[i-1][6:]
+			call add(result, file..'|1|[Deleted]')
 		endif
 	endfor
 
-	let saved_efm = &errorformat
-	let &errorformat = '%f|%l| %m'
-	cexpr result
-	let &errorformat = saved_efm
 	if len(result) > 0
 		copen
+		let saved_efm = &errorformat
+		let &errorformat = '%f|%l|%m'
+		cexpr result
+		let &errorformat = saved_efm
 	else
 		cclose
 		echo 'No changes'
